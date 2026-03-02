@@ -1,0 +1,16 @@
+# Thư mục node_modules
+node_modules/
+
+# File chứa key bí mật Firebase (QUAN TRỌNG - KHÔNG ĐƯỢC PUSH)
+serviceAccountKey.json
+
+# File môi trường
+.env
+
+# Log files
+*.log
+npm-debug.log*
+
+# Hệ điều hành
+.DS_Store
+Thumbs.db
