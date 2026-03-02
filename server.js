@@ -1,39 +1,51 @@
 const http = require('http');
-const fs = require('fs');
-const path = require('path');
+const admin = require('firebase-admin');
+
+// Render dùng port động
 const PORT = process.env.PORT || 3000;
-const DATA_FILE = path.join(__dirname, 'data.json');
 
-// Hàm đọc data từ file
-function readData() {
- try {
- if (fs.existsSync(DATA_FILE)) {
- const raw = fs.readFileSync(DATA_FILE, 'utf-8');
- return JSON.parse(raw);
- }
- } catch (e) {
- console.error('Lỗi đọc data.json:', e.message);
- }
- return { r: [], c: [], iv: [], ivr: [], ia: [], ob: [], notify: [], logs: [], cvStore: {}, RC: 1, IC: 1 };
+// ====== FIREBASE ADMIN ======
+let serviceAccount;
+if (process.env.FIREBASE_CREDENTIALS) {
+  serviceAccount = JSON.parse(process.env.FIREBASE_CREDENTIALS);
+} else {
+  serviceAccount = require('./serviceAccountKey.json');
+}
+// Dán Database URL thật của bạn vào đây:
+const DATABASE_URL = 'https://quan-ly-tuyen-dung-default-rtdb.asia-southeast1.firebasedatabase.app/';
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: DATABASE_URL
+});
+
+const db = admin.database();
+const dataRef = db.ref('appData'); // Node gốc lưu toàn bộ dữ liệu app
+
+const DEFAULT_DATA = {
+  r: [], c: [], iv: [], ivr: [], ia: [], ob: [],
+  notify: [], logs: [], cvStore: {}, RC: 1, IC: 1
+};
+
+async function readData() {
+  try {
+    const snap = await dataRef.get();
+    if (snap.exists()) return snap.val();
+  } catch (e) {
+    console.error('Lỗi đọc Firebase:', e.message);
+  }
+  return DEFAULT_DATA;
 }
 
-// Hàm ghi data vào file
-function writeData(data) {
- try {
- fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2), 'utf-8');
- return true;
- } catch (e) {
- console.error('Lỗi ghi data.json:', e.message);
- return false;
- }
+async function writeData(data) {
+  try {
+    await dataRef.set(data);
+    return true;
+  } catch (e) {
+    console.error('Lỗi ghi Firebase:', e.message);
+    return false;
+  }
 }
-
-// Khởi tạo file data.json nếu chưa có
-if (!fs.existsSync(DATA_FILE)) {
- writeData({ r: [], c: [], iv: [], ivr: [], ia: [], ob: [], notify: [], logs: [], cvStore: {}, RC: 1, IC: 1 });
- console.log('Đã tạo data.json mới');
-}
-
 // Toàn bộ nội dung HTML được nhúng trực tiếp
 const HTML_CONTENT = `<!DOCTYPE html>
 <html lang="vi">
@@ -1092,45 +1104,55 @@ loadFromServer(function(){
 </html>`;
 
 const server = http.createServer((req, res) => {
- // API: GET data
- if (req.method === 'GET' && req.url === '/api/data') {
- const data = readData();
- res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
- res.end(JSON.stringify(data));
- return;
- }
+  // API: GET data
+  if (req.method === 'GET' && req.url === '/api/data') {
+    (async () => {
+      try {
+        const data = await readData();
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify(data));
+      } catch (e) {
+        res.writeHead(500, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ ok: false, error: e.message }));
+      }
+    })();
+    return;
+  }
 
- // API: POST data
- if (req.method === 'POST' && req.url === '/api/data') {
- let body = '';
- req.on('data', chunk => { body += chunk; });
- req.on('end', () => {
- try {
- const data = JSON.parse(body);
- const ok = writeData(data);
- res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
- res.end(JSON.stringify({ ok: ok }));
- } catch (e) {
- res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
- res.end(JSON.stringify({ ok: false, error: e.message }));
- }
- });
- return;
- }
+  // API: POST data
+  if (req.method === 'POST' && req.url === '/api/data') {
+    let body = '';
+    req.on('data', (chunk) => { body += chunk; });
 
- // Serve HTML
- if (req.url === '/' || req.url === '/index.html') {
- res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
- res.end(HTML_CONTENT);
- return;
- }
+    req.on('end', () => {
+      (async () => {
+        try {
+          const data = JSON.parse(body || '{}');
+          const ok = await writeData(data);
+          res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+          res.end(JSON.stringify({ ok }));
+        } catch (e) {
+          res.writeHead(400, { 'Content-Type': 'application/json; charset=utf-8' });
+          res.end(JSON.stringify({ ok: false, error: e.message }));
+        }
+      })();
+    });
 
- // 404
- res.writeHead(404, { 'Content-Type': 'text/plain' });
- res.end('Not Found');
+    return;
+  }
+
+  // Serve HTML
+  if (req.url === '/' || req.url === '/index.html') {
+    res.writeHead(200, { 'Content-Type': 'text/html; charset=utf-8' });
+    res.end(HTML_CONTENT);
+    return;
+  }
+
+  // 404
+  res.writeHead(404, { 'Content-Type': 'text/plain; charset=utf-8' });
+  res.end('Not Found');
 });
 
 server.listen(PORT, () => {
   console.log(`Server đang chạy tại port ${PORT}`);
-  console.log('Data sẽ được lưu vào file: ' + DATA_FILE);
 });
