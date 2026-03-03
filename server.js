@@ -57,97 +57,101 @@ const HTML_CONTENT = `<!DOCTYPE html>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#f0f2f5;min-height:100vh;color:#333}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#eef2f7;min-height:100vh;color:#333}
 .view{display:none}.view.active{display:block}
 .container{max-width:1200px;margin:0 auto;padding:20px}
 .card{background:#fff;border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,.08);padding:28px;margin:16px auto;max-width:1100px}
-h1,h2,h3{color:#2c3e50;margin-bottom:15px}
-h1{text-align:center;font-size:1.8em;padding:24px 0 10px}
-h2{font-size:1.4em;border-bottom:2px solid #3498db;padding-bottom:8px;margin-bottom:20px}
-h3{font-size:1.1em;margin-top:16px;margin-bottom:10px}
-.operator-bar{background:#fff;color:#333;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:2px solid #3498db;position:sticky;top:0;z-index:1000;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+h1,h2,h3{color:#1a3a5c;margin-bottom:15px}
+h1{text-align:center;font-size:1.8em;padding:24px 0 10px;color:#1a3a5c}
+h2{font-size:1.4em;border-bottom:2px solid #2c6fbd;padding-bottom:8px;margin-bottom:20px;color:#1a3a5c}
+h3{font-size:1.1em;margin-top:16px;margin-bottom:10px;color:#1a3a5c}
+.operator-bar{background:#fff;color:#333;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;border-bottom:2px solid #2c6fbd;position:sticky;top:0;z-index:1000;box-shadow:0 2px 8px rgba(0,0,0,.06)}
 .operator-bar .operator-info{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
-.operator-bar .operator-info span{font-size:.9em}
-.op-label{color:#7f8c8d;font-weight:600}
-.op-value{color:#2c3e50;font-weight:700;background:#ecf0f1;padding:3px 10px;border-radius:6px}
-.live-clock{font-size:1em;font-weight:700;color:#27ae60;background:#f0fff4;padding:6px 14px;border-radius:8px;font-family:'Courier New',monospace}
-.change-operator-btn{background:#3498db;color:#fff;border:none;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:.85em;font-weight:600}
-.search-filter-bar{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:10px;padding:16px 20px;margin-bottom:20px}
-.search-filter-bar h3{margin:0 0 12px;color:#3498db;font-size:1em}
+.operator-bar .operator-info span{font-size:.85em}
+.op-label{color:#5a7a9e;font-weight:600}
+.op-value{color:#1a3a5c;font-weight:700;background:#e8f0fa;padding:3px 10px;border-radius:6px}
+.live-clock{font-size:1em;font-weight:700;color:#2c6fbd;background:#e8f0fa;padding:6px 14px;border-radius:8px;font-family:'Courier New',monospace}
+.change-operator-btn{background:#2c6fbd;color:#fff;border:none;padding:6px 14px;border-radius:6px;cursor:pointer;font-size:.85em;font-weight:600}
+.change-operator-btn:hover{background:#1a4f8a}
+.search-filter-bar{background:#f5f8fc;border:1px solid #d0dce8;border-radius:10px;padding:16px 20px;margin-bottom:20px}
+.search-filter-bar h3{margin:0 0 12px;color:#2c6fbd;font-size:1em}
 .filter-row{display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end}
 .filter-group{display:flex;flex-direction:column;gap:4px}
-.filter-group label{font-size:.82em;font-weight:600;color:#2c3e50}
-.filter-group input,.filter-group select{padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:.88em;min-width:140px}
-.filter-group input:focus,.filter-group select:focus{border-color:#3498db;outline:none}
+.filter-group label{font-size:.82em;font-weight:600;color:#1a3a5c}
+.filter-group input,.filter-group select{padding:8px 10px;border:1px solid #c5d5e5;border-radius:8px;font-size:.88em;min-width:140px}
+.filter-group input:focus,.filter-group select:focus{border-color:#2c6fbd;outline:none}
 .filter-btn{padding:8px 18px;font-size:.88em;font-weight:600;border:none;border-radius:8px;cursor:pointer;height:38px}
-.filter-btn-search{background:#3498db;color:#fff}
-.filter-btn-reset{background:#ecf0f1;color:#333}
-.filter-btn-excel{background:#27ae60;color:#fff}
+.filter-btn-search{background:#2c6fbd;color:#fff}
+.filter-btn-search:hover{background:#1a4f8a}
+.filter-btn-reset{background:#d0dce8;color:#1a3a5c}
+.filter-btn-excel{background:#3a7bd5;color:#fff}
 .search-result-info{margin-top:10px;font-size:.88em;color:#555;font-weight:500}
-.search-result-info strong{color:#3498db}
+.search-result-info strong{color:#2c6fbd}
 .main-buttons{display:flex;flex-direction:column;gap:14px;max-width:600px;margin:30px auto}
 .main-btn{display:block;width:100%;min-height:52px;padding:14px 24px;font-size:1.05em;font-weight:600;color:#fff;border:none;border-radius:10px;cursor:pointer;transition:all .3s;text-align:center}
-.main-btn:nth-child(1){background:#3498db}
-.main-btn:nth-child(2){background:#e74c3c}
-.main-btn:nth-child(3){background:#2ecc71}
-.main-btn:nth-child(4){background:#f39c12}
-.main-btn:nth-child(5){background:#9b59b6}
-.main-btn:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.main-btn:nth-child(1){background:#1a4f8a}
+.main-btn:nth-child(2){background:#2c6fbd}
+.main-btn:nth-child(3){background:#3a7bd5}
+.main-btn:nth-child(4){background:#5a9ae6}
+.main-btn:nth-child(5){background:#7ab3f0}
+.main-btn:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(44,111,189,.3)}
 .btn{display:inline-block;padding:10px 22px;font-size:.95em;font-weight:600;color:#fff;border:none;border-radius:8px;cursor:pointer;transition:all .3s;margin:4px}
-.btn-primary{background:#3498db}.btn-success{background:#27ae60}.btn-warning{background:#e74c3c}.btn-info{background:#17a2b8}.btn-back{background:#95a5a6}.btn-export{background:#27ae60}.btn-danger{background:#e74c3c}.btn-pdf{background:#e74c3c}.btn-print{background:#8e44ad}.btn-edit{background:#f39c12;color:#fff}.btn-notify{background:#27ae60;color:#fff}.btn-excel{background:#1d6f42;color:#fff}
-.btn:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.15)}
+.btn-primary{background:#2c6fbd}.btn-success{background:#3a7bd5}.btn-warning{background:#1a4f8a}.btn-info{background:#5a9ae6}.btn-back{background:#8fadc4}.btn-export{background:#3a7bd5}.btn-danger{background:#c0392b}.btn-pdf{background:#1a4f8a}.btn-print{background:#2c6fbd}.btn-edit{background:#5a9ae6;color:#fff}.btn-notify{background:#3a7bd5;color:#fff}.btn-excel{background:#2c6fbd;color:#fff}
+.btn:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(44,111,189,.25)}
 .form-group{margin-bottom:14px}
-.form-group label{display:block;font-weight:600;margin-bottom:5px;color:#2c3e50;font-size:.93em}
-.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 12px;border:1px solid #ddd;border-radius:8px;font-size:.95em;font-family:inherit}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#3498db;outline:none;box-shadow:0 0 0 3px rgba(52,152,219,.15)}
+.form-group label{display:block;font-weight:600;margin-bottom:5px;color:#1a3a5c;font-size:.93em}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:10px 12px;border:1px solid #c5d5e5;border-radius:8px;font-size:.95em;font-family:inherit}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:#2c6fbd;outline:none;box-shadow:0 0 0 3px rgba(44,111,189,.15)}
 .form-group textarea{min-height:70px;resize:vertical}
+.form-group select{font-size:.88em}
 .form-row{display:flex;gap:14px;flex-wrap:wrap}
 .form-row .form-group{flex:1;min-width:180px}
-.checkbox-group{display:flex;flex-wrap:wrap;gap:12px;margin:6px 0}
-.checkbox-group label{display:flex;align-items:center;gap:6px;font-weight:400;cursor:pointer;font-size:.93em;background:#f8f9fa;padding:6px 12px;border-radius:6px;border:1px solid #e0e0e0}
-.checkbox-group label:hover{background:#e8f4fd;border-color:#3498db}
-.checkbox-group input[type="checkbox"],.checkbox-group input[type="radio"]{width:18px;height:18px;accent-color:#3498db}
-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.9em}
-thead th{background:#3498db;color:#fff;padding:12px 10px;text-align:left;font-weight:600;white-space:nowrap}
-tbody td{padding:10px;border-bottom:1px solid #e8e8e8}
-tbody tr:nth-child(even){background:#f8f9fa}
-tbody tr:hover{background:#e8f4fd}
-.code-link{color:#3498db;text-decoration:underline;cursor:pointer;font-weight:600}
-.code-link:hover{color:#2980b9}
-.section-title{background:#e8f4fd;padding:12px 18px;border-radius:8px;margin:22px 0 14px;font-weight:700;color:#2c3e50;font-size:1.05em;border-left:4px solid #3498db}
+.checkbox-group{display:flex;flex-wrap:wrap;gap:10px;margin:6px 0}
+.checkbox-group label{display:flex;align-items:center;gap:6px;font-weight:400;cursor:pointer;font-size:.85em;background:#f5f8fc;padding:6px 10px;border-radius:6px;border:1px solid #d0dce8}
+.checkbox-group label:hover{background:#dce8f5;border-color:#2c6fbd}
+.checkbox-group input[type="checkbox"],.checkbox-group input[type="radio"]{width:18px;height:18px;accent-color:#2c6fbd}
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.85em}
+thead th{background:#2c6fbd;color:#fff;padding:10px 8px;text-align:left;font-weight:600;white-space:nowrap;font-size:.82em}
+tbody td{padding:8px;border-bottom:1px solid #e0e8f0;font-size:.83em}
+tbody tr:nth-child(even){background:#f5f8fc}
+tbody tr:hover{background:#dce8f5}
+.code-link{color:#2c6fbd;text-decoration:underline;cursor:pointer;font-weight:600}
+.code-link:hover{color:#1a4f8a}
+.section-title{background:#e8f0fa;padding:12px 18px;border-radius:8px;margin:22px 0 14px;font-weight:700;color:#1a3a5c;font-size:1.05em;border-left:4px solid #2c6fbd}
 .approval-section{display:flex;gap:20px;flex-wrap:wrap;margin:16px 0}
-.approval-box{flex:1;min-width:200px;background:#f8f9fa;border:1px solid #ddd;border-radius:10px;padding:16px;text-align:center}
-.approval-box h4{margin-bottom:10px;color:#2c3e50}
+.approval-box{flex:1;min-width:200px;background:#f5f8fc;border:1px solid #d0dce8;border-radius:10px;padding:16px;text-align:center}
+.approval-box h4{margin-bottom:10px;color:#1a3a5c}
 .badge{display:inline-block;padding:4px 10px;border-radius:12px;font-size:.82em;font-weight:600}
-.badge-pending{background:#fff3cd;color:#856404}
-.badge-approved{background:#d4edda;color:#155724}
-.badge-pass{background:#d4edda;color:#155724}
+.badge-pending{background:#dce8f5;color:#1a4f8a}
+.badge-approved{background:#c8ddf5;color:#0d3b6e}
+.badge-pass{background:#c8ddf5;color:#0d3b6e}
 .badge-fail{background:#f8d7da;color:#721c24}
-.badge-confirmed{background:#cce5ff;color:#004085}
-.badge-notified{background:#d1ecf1;color:#0c5460}
-.badge-ia{background:#e8daef;color:#6c3483}
+.badge-confirmed{background:#b8d4f0;color:#0a2d54}
+.badge-notified{background:#a8c8e8;color:#0a2d54}
+.badge-ia{background:#c8ddf5;color:#1a4f8a}
 .detail-grid{display:grid;grid-template-columns:220px 1fr;gap:8px 16px;margin:12px 0}
-.detail-grid .label{font-weight:600;color:#2c3e50}
+.detail-grid .label{font-weight:600;color:#1a3a5c}
 .detail-grid .value{color:#555}
 .actions-bar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:16px}
-.error-msg{color:#dc3545;font-size:.85em;margin-top:4px;display:none;font-weight:500}
+.error-msg{color:#c0392b;font-size:.85em;margin-top:4px;display:none;font-weight:500}
 .table-wrapper{overflow-x:auto}
-.commitment-box{background:#e8f4fd;border:1px solid #b8daff;border-radius:10px;padding:18px;margin:18px 0}
+.commitment-box{background:#e8f0fa;border:1px solid #b8d4f0;border-radius:10px;padding:18px;margin:18px 0}
 .commitment-box label{font-weight:600;cursor:pointer;display:flex;align-items:flex-start;gap:10px;line-height:1.5}
-.commitment-box input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:#3498db;flex-shrink:0}
-.candidate-detail-card{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:10px;padding:18px;margin:12px 0}
-.required-star{color:#dc3545;font-weight:700}
-.info-note{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.9em;color:#856404}
-.login-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);display:flex;justify-content:center;align-items:center;z-index:9999}
-.login-modal{background:#fff;border-radius:16px;padding:40px;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(0,0,0,.2);text-align:center}
-.login-modal h2{border:none;text-align:center;margin-bottom:8px}
-.login-modal p{color:#666;margin-bottom:20px;font-size:.9em}
+.commitment-box input[type="checkbox"]{width:20px;height:20px;margin-top:2px;accent-color:#2c6fbd;flex-shrink:0}
+.candidate-detail-card{background:#f5f8fc;border:1px solid #d0dce8;border-radius:10px;padding:18px;margin:12px 0}
+.required-star{color:#c0392b;font-weight:700}
+.info-note{background:#e8f0fa;border:1px solid #b8d4f0;border-radius:8px;padding:10px 14px;margin:10px 0;font-size:.9em;color:#1a4f8a}
+.login-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(26,58,92,.5);display:flex;justify-content:center;align-items:center;z-index:9999}
+.login-modal{background:#fff;border-radius:16px;padding:40px;max-width:420px;width:90%;box-shadow:0 20px 60px rgba(26,58,92,.25);text-align:center}
+.login-modal h2{border:none;text-align:center;margin-bottom:8px;color:#1a3a5c}
+.login-modal p{color:#5a7a9e;margin-bottom:20px;font-size:.9em}
 .login-modal .form-group{text-align:left}
-.login-modal .login-btn{width:100%;padding:14px;font-size:1.1em;font-weight:700;background:#3498db;color:#fff;border:none;border-radius:10px;cursor:pointer;margin-top:10px}
-.login-error{color:#dc3545;font-size:.85em;margin-top:8px;display:none}
-.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);display:none;justify-content:center;align-items:center;z-index:5000}
+.login-modal .login-btn{width:100%;padding:14px;font-size:1.1em;font-weight:700;background:#2c6fbd;color:#fff;border:none;border-radius:10px;cursor:pointer;margin-top:10px}
+.login-modal .login-btn:hover{background:#1a4f8a}
+.login-error{color:#c0392b;font-size:.85em;margin-top:8px;display:none}
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(26,58,92,.5);display:none;justify-content:center;align-items:center;z-index:5000}
 .modal-overlay.active{display:flex}
-.modal-content{background:#fff;border-radius:14px;padding:30px;max-width:900px;width:95%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal-content{background:#fff;border-radius:14px;padding:30px;max-width:900px;width:95%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(26,58,92,.25)}
 .print-area{background:#fff;padding:40px;font-family:'Times New Roman',serif;color:#000;line-height:1.6}
 .print-area h2{color:#000;border-bottom:2px solid #000;font-size:1.3em;text-align:center}
 .print-area table{border:1px solid #000}
@@ -155,43 +159,43 @@ tbody tr:hover{background:#e8f4fd}
 .print-area table td{border:1px solid #000;padding:8px}
 .print-area .print-footer{margin-top:30px;display:flex;justify-content:space-between}
 .print-area .print-footer div{text-align:center;min-width:200px}
-.edit-mode-banner{background:#f39c12;color:#fff;padding:10px 18px;border-radius:8px;margin-bottom:16px;font-weight:700;display:flex;align-items:center;gap:10px}
+.edit-mode-banner{background:#5a9ae6;color:#fff;padding:10px 18px;border-radius:8px;margin-bottom:16px;font-weight:700;display:flex;align-items:center;gap:10px}
 .uppercase-input{text-transform:uppercase}
-.score-display{background:#fff;border:2px solid #3498db;border-radius:10px;padding:14px;text-align:center;margin:10px 0}
-.score-display .score-value{font-size:2em;font-weight:800;color:#3498db}
-.score-display .score-label{font-size:.85em;color:#888}
-.checklist-section{background:#f8f9fa;border:1px solid #ddd;border-radius:12px;padding:20px;margin:16px 0}
-.checklist-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid #e8e8e8}
+.score-display{background:#fff;border:2px solid #2c6fbd;border-radius:10px;padding:14px;text-align:center;margin:10px 0}
+.score-display .score-value{font-size:2em;font-weight:800;color:#2c6fbd}
+.score-display .score-label{font-size:.85em;color:#5a7a9e}
+.checklist-section{background:#f5f8fc;border:1px solid #d0dce8;border-radius:12px;padding:20px;margin:16px 0}
+.checklist-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-bottom:1px solid #e0e8f0}
 .checklist-item:last-child{border-bottom:none}
-.checklist-item input[type="checkbox"]{width:20px;height:20px;accent-color:#27ae60}
+.checklist-item input[type="checkbox"]{width:20px;height:20px;accent-color:#2c6fbd}
 .checklist-item label{font-size:.93em;cursor:pointer;flex:1}
-.notify-section{background:#f0fff4;border:1px solid #27ae60;border-radius:12px;padding:20px;margin:16px 0}
-.notify-section h3{color:#1e8449;margin-bottom:14px}
-.dup-warning{background:#f8d7da;border:1px solid #e74c3c;border-radius:8px;padding:10px 14px;margin:8px 0;font-size:.9em;color:#721c24;display:flex;align-items:center;gap:8px}
+.notify-section{background:#e8f0fa;border:1px solid #2c6fbd;border-radius:12px;padding:20px;margin:16px 0}
+.notify-section h3{color:#1a4f8a;margin-bottom:14px}
+.dup-warning{background:#f8d7da;border:1px solid #c0392b;border-radius:8px;padding:10px 14px;margin:8px 0;font-size:.9em;color:#721c24;display:flex;align-items:center;gap:8px}
 .dup-warning .dup-icon{font-size:1.2em}
 .eval-table{width:100%;border-collapse:collapse;margin:10px 0}
-.eval-table th,.eval-table td{border:1px solid #ddd;padding:10px;text-align:left}
-.eval-table th{background:#e8f4fd;color:#2c3e50;font-weight:600}
-.eval-table select{padding:6px;border-radius:6px;border:1px solid #ddd;min-width:80px}
-.eval-table textarea{width:100%;min-height:40px;padding:6px;border:1px solid #ddd;border-radius:6px;font-family:inherit;font-size:.85em;resize:vertical}
-.cv-upload-area{border:2px dashed #3498db;border-radius:10px;padding:24px;text-align:center;background:#f8f9ff;cursor:pointer;transition:all .3s}
-.cv-upload-area:hover{background:#e8f4fd;border-color:#2980b9}
+.eval-table th,.eval-table td{border:1px solid #d0dce8;padding:10px;text-align:left}
+.eval-table th{background:#e8f0fa;color:#1a3a5c;font-weight:600}
+.eval-table select{padding:6px;border-radius:6px;border:1px solid #c5d5e5;min-width:80px}
+.eval-table textarea{width:100%;min-height:40px;padding:6px;border:1px solid #c5d5e5;border-radius:6px;font-family:inherit;font-size:.85em;resize:vertical}
+.cv-upload-area{border:2px dashed #2c6fbd;border-radius:10px;padding:24px;text-align:center;background:#f5f8fc;cursor:pointer;transition:all .3s}
+.cv-upload-area:hover{background:#dce8f5;border-color:#1a4f8a}
 .cv-upload-area .cv-icon{font-size:2.5em;margin-bottom:8px}
 .cv-upload-area p{color:#555;font-size:.9em;margin:4px 0}
-.cv-upload-area .cv-hint{color:#999;font-size:.8em}
-.cv-preview{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;background:#d4edda;border-radius:8px;margin-top:10px;font-weight:600;color:#155724;max-width:100%;word-break:break-all}
-.cv-preview a{color:#155724;text-decoration:underline;cursor:pointer;font-weight:700}
-.cv-preview a:hover{color:#0d6e2e}
-.cv-preview .cv-remove{background:#e74c3c;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;font-size:.8em;font-weight:600;margin-left:8px;flex-shrink:0}
-.cv-preview .cv-remove:hover{background:#c0392b}
-.cv-preview .cv-size{color:#6c757d;font-size:.8em;font-weight:400}
+.cv-upload-area .cv-hint{color:#8fadc4;font-size:.8em}
+.cv-preview{display:inline-flex;align-items:center;gap:10px;padding:10px 16px;background:#c8ddf5;border-radius:8px;margin-top:10px;font-weight:600;color:#0d3b6e;max-width:100%;word-break:break-all}
+.cv-preview a{color:#0d3b6e;text-decoration:underline;cursor:pointer;font-weight:700}
+.cv-preview a:hover{color:#1a4f8a}
+.cv-preview .cv-remove{background:#c0392b;color:#fff;border:none;padding:4px 10px;border-radius:6px;cursor:pointer;font-size:.8em;font-weight:600;margin-left:8px;flex-shrink:0}
+.cv-preview .cv-remove:hover{background:#a93226}
+.cv-preview .cv-size{color:#5a7a9e;font-size:.8em;font-weight:400}
 .exp-table{width:100%;border-collapse:collapse;margin:10px 0}
-.exp-table th,.exp-table td{border:1px solid #ddd;padding:8px;text-align:left;font-size:.88em}
-.exp-table th{background:#e8f4fd;color:#2c3e50;font-weight:600}
-.exp-table input,.exp-table select{width:100%;padding:6px;border:1px solid #ddd;border-radius:4px;font-size:.85em;font-family:inherit}
-.exp-table .remove-row{background:#e74c3c;color:#fff;border:none;padding:4px 8px;border-radius:4px;cursor:pointer;font-size:.8em}
-.add-row-btn{background:#27ae60;color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.88em;font-weight:600;margin-top:8px}
-.add-row-btn:hover{background:#219a52}
+.exp-table th,.exp-table td{border:1px solid #d0dce8;padding:8px;text-align:left;font-size:.88em}
+.exp-table th{background:#e8f0fa;color:#1a3a5c;font-weight:600}
+.exp-table input,.exp-table select{width:100%;padding:6px;border:1px solid #c5d5e5;border-radius:4px;font-size:.85em;font-family:inherit}
+.exp-table .remove-row{background:#c0392b;color:#fff;border:none;padding:4px 8px;border-radius:4px;cursor:pointer;font-size:.8em}
+.add-row-btn{background:#2c6fbd;color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;font-size:.88em;font-weight:600;margin-top:8px}
+.add-row-btn:hover{background:#1a4f8a}
 .se-form{font-family:'Times New Roman',serif;color:#000;line-height:1.5;font-size:13px}
 .se-form .se-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px}
 .se-form .se-logo{font-weight:900;font-size:20px;font-family:Arial,sans-serif}
@@ -208,8 +212,8 @@ tbody tr:hover{background:#e8f4fd}
 .se-form .se-footer div{text-align:center;min-width:180px}
 .se-form .se-grid{display:grid;grid-template-columns:1fr 1fr;gap:2px 12px}
 .se-form .se-grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px 12px}
-.op-stamp{font-size:.75em;color:#888;font-style:italic}
-@media(max-width:768px){.form-row{flex-direction:column}.detail-grid{grid-template-columns:1fr}.approval-section{flex-direction:column}.card{padding:16px;margin:10px}h1{font-size:1.4em}.operator-bar{flex-direction:column;text-align:center}.filter-row{flex-direction:column}}
+.op-stamp{font-size:.75em;color:#8fadc4;font-style:italic}
+@media(max-width:768px){.form-row{flex-direction:column}.detail-grid{grid-template-columns:1fr}.approval-section{flex-direction:column}.card{padding:16px;margin:10px}h1{font-size:1.4em}.operator-bar{flex-direction:column;text-align:center}.filter-row{flex-direction:column}.checkbox-group label{font-size:.8em;padding:5px 8px}}
 </style>
 </head>
 <body>
@@ -222,7 +226,7 @@ tbody tr:hover{background:#e8f4fd}
 <div class="form-group"><label>Mã NV <span class="required-star">*</span></label><input type="text" id="login_empId" required placeholder="NV001"></div>
 <div class="form-group"><label>Họ tên <span class="required-star">*</span> (IN HOA)</label><input type="text" id="login_empName" required placeholder="NGUYỄN VĂN A" class="uppercase-input"></div>
 <div class="form-group"><label>Phòng ban <span class="required-star">*</span></label>
-<select id="login_empDept" required><option value="">-- Chọn --</option><option>Sản xuất 2.1</option><option>Sản xuất 2.2</option><option>Sản xuất 3</option><option>Sản xuất 4</option><option>Kiểm tra 1</option><option>Kiểm tra 2</option><option>Phòng Nhân sự</option><option>Ban Giám Đốc</option></select></div>
+<select id="login_empDept" required><option value="">-- Chọn --</option><option>Sản xuất 1</option><option>Sản xuất 2.1</option><option>Sản xuất 2.2</option><option>Sản xuất 2.2 M&amp;E</option><option>Sản xuất 3.345</option><option>Sản xuất 3.6</option><option>Sản xuất 4</option><option>Bảo trì bảo dưỡng 1</option><option>Kỹ thuật 1</option><option>Bảo trì bảo dưỡng 2</option><option>Kỹ thuật 2</option><option>Kiểm soát chất lượng 1</option><option>Kiểm soát chất lượng 2</option><option>QA</option><option>Kiểm tra 1</option><option>Kiểm tra 2</option><option>Phân tích</option><option>EHS</option><option>Hỗ trợ sản xuất</option><option>Kế toán</option><option>Hành chính nhân sự</option><option>IT (hệ thống)</option></select></div>
 <div class="form-group"><label>Chức vụ <span class="required-star">*</span></label>
 <select id="login_empTitle" required><option value="">-- Chọn --</option><option value="Công nhân">Công nhân</option><option value="Nhân viên">Nhân viên</option><option value="Kỹ sư">Kỹ sư</option><option value="Trưởng nhóm">Trưởng nhóm</option><option value="Quản lý">Quản lý</option><option value="Giám đốc">Giám đốc</option></select></div>
 <div class="login-error" id="loginError">Vui lòng điền đầy đủ. Họ tên phải IN HOA.</div>
@@ -479,7 +483,7 @@ tbody tr:hover{background:#e8f4fd}
 <div class="section-title">I. Thông tin chung</div>
 <div class="form-row">
 <div class="form-group"><label>Phòng ban <span class="required-star">*</span></label>
-<select id="rf_dept" required><option value="">--</option><option>Sản xuất 2.1</option><option>Sản xuất 2.2</option><option>Sản xuất 3</option><option>Sản xuất 4</option><option>Kiểm tra 1</option><option>Kiểm tra 2</option></select></div>
+<select id="rf_dept" required><option value="">--</option><option>Sản xuất 1</option><option>Sản xuất 2.1</option><option>Sản xuất 2.2</option><option>Sản xuất 2.2 M&amp;E</option><option>Sản xuất 3.345</option><option>Sản xuất 3.6</option><option>Sản xuất 4</option><option>Bảo trì bảo dưỡng 1</option><option>Kỹ thuật 1</option><option>Bảo trì bảo dưỡng 2</option><option>Kỹ thuật 2</option><option>Kiểm soát chất lượng 1</option><option>Kiểm soát chất lượng 2</option><option>QA</option><option>Kiểm tra 1</option><option>Kiểm tra 2</option><option>Phân tích</option><option>EHS</option><option>Hỗ trợ sản xuất</option><option>Kế toán</option><option>Hành chính nhân sự</option><option>IT (hệ thống)</option></select></div>
 <div class="form-group"><label>Người đề xuất <span class="required-star">*</span> (IN HOA)</label><input type="text" id="rf_proposer" required class="uppercase-input"><div class="error-msg" id="err_rf_proposer">Phải IN HOA</div></div>
 </div>
 <div class="form-row">
@@ -497,9 +501,9 @@ tbody tr:hover{background:#e8f4fd}
 <div class="section-title">II. Thông tin chi tiết</div>
 <div class="form-group"><label>Báo cáo cho (Report to)</label><input type="text" id="rf_reportTo" class="uppercase-input"></div>
 <div class="form-group"><label>Địa điểm <span class="required-star">*</span></label>
-<div class="checkbox-group"><label><input type="radio" name="rf_location" value="Nhà máy 1" required> NM1</label><label><input type="radio" name="rf_location" value="Nhà máy 2"> NM2</label><label><input type="radio" name="rf_location" value="Nhà máy 3"> NM3</label><label><input type="radio" name="rf_location" value="Nhà máy 4"> NM4</label></div></div>
+<div class="checkbox-group"><label><input type="radio" name="rf_location" value="Nhà máy 1" required> Nhà máy 1</label><label><input type="radio" name="rf_location" value="Nhà máy 2"> Nhà máy 2</label><label><input type="radio" name="rf_location" value="Nhà máy 3"> Nhà máy 3</label><label><input type="radio" name="rf_location" value="Nhà máy 4"> Nhà máy 4</label></div></div>
 <div class="form-group"><label>Thời gian LV <span class="required-star">*</span></label>
-<div class="checkbox-group"><label><input type="radio" name="rf_workTime" value="Hành chính" required> HC</label><label><input type="radio" name="rf_workTime" value="HC kíp"> HC kíp</label><label><input type="radio" name="rf_workTime" value="2 ca"> 2 ca</label><label><input type="radio" name="rf_workTime" value="3 ca"> 3 ca</label><label><input type="radio" name="rf_workTime" value="3 ca kíp"> 3 ca kíp</label></div></div>
+<div class="checkbox-group"><label><input type="radio" name="rf_workTime" value="Hành chính" required> Hành chính</label><label><input type="radio" name="rf_workTime" value="Hành chính kíp"> Hành chính kíp</label><label><input type="radio" name="rf_workTime" value="2 ca"> 2 ca</label><label><input type="radio" name="rf_workTime" value="3 ca"> 3 ca</label><label><input type="radio" name="rf_workTime" value="3 ca kíp"> 3 ca kíp</label></div>></div>
 <div class="form-row">
 <div class="form-group"><label>Mức lương <span class="required-star">*</span></label><input type="text" id="rf_salary" required placeholder="10,000,000 - 15,000,000"></div>
 <div class="form-group"><label>Dải lương</label><input type="text" id="rf_salaryRange"></div>
@@ -507,7 +511,7 @@ tbody tr:hover{background:#e8f4fd}
 <div class="form-group"><label>Mục tiêu CV <span class="required-star">*</span></label><textarea id="rf_jd" required></textarea></div>
 <div class="form-group"><label>Nhiệm vụ chính <span class="required-star">*</span></label><textarea id="rf_responsibilities" required></textarea></div>
 <div class="form-row">
-<div class="form-group"><label>Trình độ <span class="required-star">*</span></label><select id="rf_edu" required><option value="">--</option><option>Trung cấp</option><option>Cao đẳng</option><option>Đại học</option><option>Thạc sĩ</option><option>Tiến sĩ</option></select></div>
+<div class="form-group"><label>Trình độ <span class="required-star">*</span></label><select id="rf_edu" required><option value="">--</option><option>THCS</option><option>THPT</option><option>Trung cấp</option><option>Cao đẳng</option><option>Đại học</option><option>Thạc sĩ</option><option>Tiến sĩ</option></select></div>
 <div class="form-group"><label>Chuyên ngành</label><input type="text" id="rf_major"></div>
 </div>
 <div class="form-row">
@@ -524,7 +528,7 @@ tbody tr:hover{background:#e8f4fd}
 <div class="approval-section">
 <div class="approval-box"><h4>Trưởng phòng</h4><div class="form-group"><label style="font-size:.82em">Họ tên</label><input type="text" id="rf_ap1" class="uppercase-input"></div><div class="form-group"><select id="rf_ap1s"><option value="Chờ duyệt">Chờ duyệt</option><option value="Đã duyệt">Đã duyệt</option><option value="Từ chối">Từ chối</option></select></div></div>
 <div class="approval-box"><h4>HR Manager</h4><div class="form-group"><label style="font-size:.82em">Họ tên</label><input type="text" id="rf_ap2" class="uppercase-input"></div><div class="form-group"><select id="rf_ap2s"><option value="Chờ duyệt">Chờ duyệt</option><option value="Đã duyệt">Đã duyệt</option><option value="Từ chối">Từ chối</option></select></div></div>
-<div class="approval-box"><h4>Ban GĐ</h4><div class="form-group"><label style="font-size:.82em">Họ tên</label><input type="text" id="rf_ap3" class="uppercase-input"></div><div class="form-group"><select id="rf_ap3s"><option value="Chờ duyệt">Chờ duyệt</option><option value="Đã duyệt">Đã duyệt</option><option value="Từ chối">Từ chối</option></select></div></div>
+<div class="approval-box"><h4>Ban Giám đốc</h4><div class="form-group"><label style="font-size:.82em">Họ tên</label><input type="text" id="rf_ap3" class="uppercase-input"></div><div class="form-group"><select id="rf_ap3s"><option value="Chờ duyệt">Chờ duyệt</option><option value="Đã duyệt">Đã duyệt</option><option value="Từ chối">Từ chối</option></select></div></div>
 </div>
 <div style="text-align:center;margin-top:24px"><button type="submit" class="btn btn-primary" style="min-width:220px;min-height:48px" id="rfBtn">Lưu</button></div>
 </form>
@@ -564,7 +568,7 @@ tbody tr:hover{background:#e8f4fd}
 <div class="section-title">Bộ phận thi tuyển & Ngày phỏng vấn</div>
 <div class="form-row">
 <div class="form-group"><label>Bộ phận thi tuyển <span class="required-star">*</span></label>
-<select id="cf_bophan" required><option value="">-- Chọn --</option><option>Sản xuất P.3.03</option><option>Sản xuất 2.1</option><option>Sản xuất 2.2</option><option>Sản xuất 3</option><option>Sản xuất 4</option><option>Kiểm tra 1</option><option>Kiểm tra 2</option></select>
+<select id="cf_bophan" required><option value="">-- Chọn --</option><option>Sản xuất 1</option><option>Sản xuất 2.1</option><option>Sản xuất 2.2</option><option>Sản xuất 2.2 M&amp;E</option><option>Sản xuất 3.345</option><option>Sản xuất 3.6</option><option>Sản xuất 4</option><option>Bảo trì bảo dưỡng 1</option><option>Kỹ thuật 1</option><option>Bảo trì bảo dưỡng 2</option><option>Kỹ thuật 2</option><option>Kiểm soát chất lượng 1</option><option>Kiểm soát chất lượng 2</option><option>QA</option><option>Kiểm tra 1</option><option>Kiểm tra 2</option><option>Phân tích</option><option>EHS</option><option>Hỗ trợ sản xuất</option><option>Kế toán</option><option>Hành chính nhân sự</option><option>IT (hệ thống)</option></select>
 <div class="error-msg" id="err_cf_bophan">Bắt buộc</div></div>
 <div class="form-group"><label>Ngày phỏng vấn</label><input type="date" id="cf_ivDate"></div>
 <div class="form-group"><label>Số báo danh</label><input type="text" id="cf_sobaodanh" placeholder="VD: 01"></div>
@@ -617,7 +621,7 @@ tbody tr:hover{background:#e8f4fd}
 <div class="section-title">2. Kinh nghiệm làm việc (Khoanh tròn các mục)</div>
 <div class="form-row">
 <div class="form-group"><label>(*) Tốt nghiệp trường <span class="required-star">*</span></label>
-<select id="cf_edu" required><option value="">--</option><option>Cấp 2</option><option>Cấp 3</option><option>Đại học</option><option>Cao đẳng</option><option>Trung cấp</option><option>Khác</option></select>
+<select id="cf_edu" required><option value="">--</option><option>THCS</option><option>THPT</option><option>Trung cấp</option><option>Cao đẳng</option><option>Đại học</option><option>Thạc sĩ</option><option>Tiến sĩ</option></select>
 <div class="error-msg" id="err_cf_edu">Bắt buộc</div></div>
 <div class="form-group"><label>Tên trường</label><input type="text" id="cf_school"><div class="error-msg" id="err_cf_school"></div></div>
 <div class="form-group"><label>Năm tốt nghiệp</label><input type="text" id="cf_gradYear" placeholder="2017"><div class="error-msg" id="err_cf_gradYear"></div></div>
@@ -910,7 +914,7 @@ function dlPDF(){var el=document.getElementById('pdfContent'),t=document.getElem
 function printD(){var c=document.getElementById('pdfContent').innerHTML,w=window.open('','_blank','width=800,height=600');w.document.write('<html><head><title>In</title><style>body{font-family:"Times New Roman",serif;padding:10px;line-height:1.4;font-size:12px}table{width:100%;border-collapse:collapse;margin:4px 0}th{background:#e0e0e0;border:1px solid #000;padding:5px}td{border:1px solid #000;padding:5px}h2{text-align:center}.print-footer{margin-top:20px;display:flex;justify-content:space-between}.print-footer div{text-align:center;min-width:180px}.se-form{font-family:"Times New Roman",serif;color:#000;line-height:1.4;font-size:12px}.se-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px}.se-logo{font-weight:900;font-size:18px;font-family:Arial,sans-serif}.se-title{text-align:center;font-size:15px;font-weight:700;flex:1}.se-date-box{border:1px solid #000;padding:4px 8px;font-size:11px}.se-section{font-weight:700;margin:8px 0 3px;font-size:12px}.se-field{margin:2px 0;font-size:11px}.se-field .se-label{font-weight:600}.se-field .se-val{border-bottom:1px dotted #000;display:inline-block;min-width:100px;padding:0 3px}.se-check{display:inline-block;width:13px;height:13px;border:1px solid #000;text-align:center;font-size:9px;line-height:13px;margin-right:3px;vertical-align:middle}.se-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px 10px}.se-grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px 10px}.se-footer{margin-top:12px;display:flex;justify-content:space-between;font-size:11px}.se-footer div{text-align:center;min-width:160px}table.se-table{width:100%;border-collapse:collapse}table.se-table td,table.se-table th{border:1px solid #000;padding:4px 6px;font-size:11px}</style></head><body>'+c+'</body></html>');w.document.close();setTimeout(function(){w.print()},500)}
 function tH(h,r){var s='<table><thead><tr>';h.forEach(function(x){s+='<th>'+x+'</th>'});s+='</tr></thead><tbody>';r.forEach(function(row){s+='<tr>';row.forEach(function(c){s+='<td>'+(c||'')+'</td>'});s+='</tr>'});return s+'</tbody></table>'}
 
-function genShinEtsuPDF(c,idx){var ck=function(v,match){return v===match?'✓':' '};var expHTML='';if(c.experiences&&c.experiences.length){c.experiences.forEach(function(e){expHTML+='<tr><td>'+e.time+'</td><td>'+e.job+'</td><td>'+e.company+'</td><td>'+e.location+'</td><td>'+e.salary+'</td></tr>'});}else{for(var i=0;i<4;i++)expHTML+='<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>'}var srcChecks='';var srcList=['Facebook','Người quen','Biển quảng cáo','Đơn vị tư vấn việc làm','Hội thảo/Loa đài','Website','Khác'];srcList.forEach(function(s){var checked=c.sources&&c.sources.indexOf(s)>=0;srcChecks+='<span class="se-check">'+(checked?'✓':' ')+'</span> '+s+'&nbsp;&nbsp;&nbsp;'});var maritalVal=c.marital||'';var fullPermAddr=(c.permAddr||'')+(c.permWard?', '+c.permWard:'')+(c.permCity?', '+c.permCity:'');var fullCurrAddr=(c.currAddr||'')+(c.currWard?', '+c.currWard:'')+(c.currCity?', '+c.currCity:'');var html='<div class="se-form">';html+='<div class="se-header"><div class="se-logo">Shin<span style="color:#c00">Etsu</span></div><div class="se-title">THÔNG TIN TRƯỚC PHỎNG VẤN</div><div class="se-date-box">Ngày phỏng vấn: <strong>'+(c.ivDate?fd(c.ivDate):'...../...../........')+'</strong><br>Số báo danh: <strong>'+(c.sobaodanh||'........')+'</strong></div></div>';html+='<div class="se-section">1. (*) Phần điền bắt buộc</div><div style="margin-left:10px">';html+='<div class="se-grid"><div class="se-field">Bộ phận thi tuyển: <span class="se-val">'+(c.bophan||'')+'</span></div></div>';html+='<div class="se-grid"><div class="se-field">Họ và tên: <span class="se-val"><strong>'+c.name+'</strong></span></div><div class="se-field">Ngày sinh: <span class="se-val">'+fd(c.dob)+'</span> &nbsp;Giới tính: <span class="se-val">'+c.gender+'</span> &nbsp;Dân tộc: <span class="se-val">'+(c.ethnic||'Kinh')+'</span></div></div>';html+='<div class="se-field">Tình trạng kết hôn: &nbsp;<span class="se-check">'+ck(maritalVal,'Kết hôn')+'</span> Kết hôn &nbsp;&nbsp;<span class="se-check">'+ck(maritalVal,'Độc thân')+'</span> Độc thân &nbsp;&nbsp; Số con: <span class="se-val">'+(c.children||'0')+'</span> &nbsp;Con mấy tuổi: <span class="se-val">'+(c.childAge||'')+'</span></div>';html+='<div class="se-field">Số CCCD: <span class="se-val">'+c.cccd+'</span> &nbsp;Ngày cấp: <span class="se-val">'+(c.cccdDate?fd(c.cccdDate):'')+'</span> &nbsp;Nơi cấp: <span class="se-val">'+(c.cccdPlace||'')+'</span> &nbsp;Hạn căn cước: <span class="se-val">'+(c.cccdExpiry?fd(c.cccdExpiry):'')+'</span></div>';html+='<div class="se-grid"><div class="se-field">Số điện thoại: <span class="se-val">'+c.phone+'</span></div><div class="se-field">Số điện thoại người thân: <span class="se-val">'+(c.relativePhone||'')+'</span></div></div>';html+='<div class="se-field">Đ/c thường trú: <span class="se-val">'+fullPermAddr+'</span></div>';html+='<div class="se-field">Đ/c tạm trú hiện nay: <span class="se-val">'+fullCurrAddr+'</span></div>';html+='<div class="se-grid3"><div class="se-field">Chiều cao: <span class="se-val">'+(c.height||'')+'</span> cm</div><div class="se-field">Cân nặng: <span class="se-val">'+(c.weight||'')+'</span> kg</div><div class="se-field">Cỡ giày: <span class="se-val">'+(c.shoeSize||'')+'</span></div></div></div>';html+='<div class="se-section">2. Kinh nghiệm làm việc</div><div style="margin-left:10px">';var eduList=['Cấp 2','Cấp 3','Đại học','Cao đẳng','Trung cấp','Khác'];html+='<div class="se-field">(*) Tốt nghiệp trường: &nbsp;';eduList.forEach(function(e){html+='<span class="se-check">'+ck(c.edu,e)+'</span> '+e+'&nbsp;&nbsp;'});html+=' &nbsp;Tên trường: <span class="se-val">'+(c.school||'')+'</span> &nbsp;Năm tốt nghiệp: <span class="se-val">'+(c.gradYear||'')+'</span></div>';html+='<table class="se-table"><thead><tr><th>Thời gian</th><th>Nội dung</th><th>Đơn vị</th><th>Địa điểm</th><th>Mức lương TB</th></tr></thead><tbody>'+expHTML+'</tbody></table></div>';html+='<div class="se-section">(*) 3. Xác nhận</div><div style="margin-left:10px">';var prevIV=c.prevIV||'Chưa';html+='<div class="se-field">• Đã PV ShinEtsu? &nbsp;<span class="se-check">'+ck(prevIV,'Chưa')+'</span> Chưa &nbsp;<span class="se-check">'+ck(prevIV,'Đã PV')+'</span> Đã PV</div>';var availTime=c.availTime||'';html+='<div class="se-field">• Thời gian đi làm: &nbsp;<span class="se-check">'+ck(availTime,'Đi làm ngay')+'</span> Đi làm ngay &nbsp;<span class="se-check">'+ck(availTime,'Chọn ngày')+'</span> Đi làm từ ngày: <span class="se-val">'+(c.availDate?fd(c.availDate):'')+'</span></div>';var smoke=c.smoke||'';html+='<div class="se-field">• Hút thuốc? &nbsp;<span class="se-check">'+ck(smoke,'Có')+'</span> Có &nbsp;<span class="se-check">'+ck(smoke,'Không')+'</span> Không</div>';html+='<div class="se-field">• Nguồn TD: &nbsp;'+srcChecks+'</div>';var bus=c.bus||'Không';html+='<div class="se-field">• Xe bus? &nbsp;<span class="se-check">'+ck(bus,'Không')+'</span> Không &nbsp;<span class="se-check">'+ck(bus,'Có')+'</span> Có</div></div>';html+='<div class="se-footer"><div><strong>Người tuyển dụng</strong><br><br>Kết quả: □ OK &nbsp;□ NG</div><div><strong>Ký và ghi rõ họ tên</strong><br><br><br>'+c.name+'</div></div></div>';return html}
+function genShinEtsuPDF(c,idx){var ck=function(v,match){return v===match?'✓':' '};var expHTML='';if(c.experiences&&c.experiences.length){c.experiences.forEach(function(e){expHTML+='<tr><td>'+e.time+'</td><td>'+e.job+'</td><td>'+e.company+'</td><td>'+e.location+'</td><td>'+e.salary+'</td></tr>'});}else{for(var i=0;i<4;i++)expHTML+='<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>'}var srcChecks='';var srcList=['Facebook','Người quen','Biển quảng cáo','Đơn vị tư vấn việc làm','Hội thảo/Loa đài','Website','Khác'];srcList.forEach(function(s){var checked=c.sources&&c.sources.indexOf(s)>=0;srcChecks+='<span class="se-check">'+(checked?'✓':' ')+'</span> '+s+'&nbsp;&nbsp;&nbsp;'});var maritalVal=c.marital||'';var fullPermAddr=(c.permAddr||'')+(c.permWard?', '+c.permWard:'')+(c.permCity?', '+c.permCity:'');var fullCurrAddr=(c.currAddr||'')+(c.currWard?', '+c.currWard:'')+(c.currCity?', '+c.currCity:'');var html='<div class="se-form">';html+='<div class="se-header"><div class="se-logo">Shin<span style="color:#c00">Etsu</span></div><div class="se-title">THÔNG TIN TRƯỚC PHỎNG VẤN</div><div class="se-date-box">Ngày phỏng vấn: <strong>'+(c.ivDate?fd(c.ivDate):'...../...../........')+'</strong><br>Số báo danh: <strong>'+(c.sobaodanh||'........')+'</strong></div></div>';html+='<div class="se-section">1. (*) Phần điền bắt buộc</div><div style="margin-left:10px">';html+='<div class="se-grid"><div class="se-field">Bộ phận thi tuyển: <span class="se-val">'+(c.bophan||'')+'</span></div></div>';html+='<div class="se-grid"><div class="se-field">Họ và tên: <span class="se-val"><strong>'+c.name+'</strong></span></div><div class="se-field">Ngày sinh: <span class="se-val">'+fd(c.dob)+'</span> &nbsp;Giới tính: <span class="se-val">'+c.gender+'</span> &nbsp;Dân tộc: <span class="se-val">'+(c.ethnic||'Kinh')+'</span></div></div>';html+='<div class="se-field">Tình trạng kết hôn: &nbsp;<span class="se-check">'+ck(maritalVal,'Kết hôn')+'</span> Kết hôn &nbsp;&nbsp;<span class="se-check">'+ck(maritalVal,'Độc thân')+'</span> Độc thân &nbsp;&nbsp; Số con: <span class="se-val">'+(c.children||'0')+'</span> &nbsp;Con mấy tuổi: <span class="se-val">'+(c.childAge||'')+'</span></div>';html+='<div class="se-field">Số CCCD: <span class="se-val">'+c.cccd+'</span> &nbsp;Ngày cấp: <span class="se-val">'+(c.cccdDate?fd(c.cccdDate):'')+'</span> &nbsp;Nơi cấp: <span class="se-val">'+(c.cccdPlace||'')+'</span> &nbsp;Hạn căn cước: <span class="se-val">'+(c.cccdExpiry?fd(c.cccdExpiry):'')+'</span></div>';html+='<div class="se-grid"><div class="se-field">Số điện thoại: <span class="se-val">'+c.phone+'</span></div><div class="se-field">Số điện thoại người thân: <span class="se-val">'+(c.relativePhone||'')+'</span></div></div>';html+='<div class="se-field">Đ/c thường trú: <span class="se-val">'+fullPermAddr+'</span></div>';html+='<div class="se-field">Đ/c tạm trú hiện nay: <span class="se-val">'+fullCurrAddr+'</span></div>';html+='<div class="se-grid3"><div class="se-field">Chiều cao: <span class="se-val">'+(c.height||'')+'</span> cm</div><div class="se-field">Cân nặng: <span class="se-val">'+(c.weight||'')+'</span> kg</div><div class="se-field">Cỡ giày: <span class="se-val">'+(c.shoeSize||'')+'</span></div></div></div>';html+='<div class="se-section">2. Kinh nghiệm làm việc</div><div style="margin-left:10px">';var eduList=['THCS','THPT','Trung cấp','Cao đẳng','Đại học','Thạc sĩ','Tiến sĩ'];html+='<div class="se-field">(*) Tốt nghiệp trường: &nbsp;';eduList.forEach(function(e){html+='<span class="se-check">'+ck(c.edu,e)+'</span> '+e+'&nbsp;&nbsp;'});html+=' &nbsp;Tên trường: <span class="se-val">'+(c.school||'')+'</span> &nbsp;Năm tốt nghiệp: <span class="se-val">'+(c.gradYear||'')+'</span></div>';html+='<table class="se-table"><thead><tr><th>Thời gian</th><th>Nội dung</th><th>Đơn vị</th><th>Địa điểm</th><th>Mức lương TB</th></tr></thead><tbody>'+expHTML+'</tbody></table></div>';html+='<div class="se-section">(*) 3. Xác nhận</div><div style="margin-left:10px">';var prevIV=c.prevIV||'Chưa';html+='<div class="se-field">• Đã PV ShinEtsu? &nbsp;<span class="se-check">'+ck(prevIV,'Chưa')+'</span> Chưa &nbsp;<span class="se-check">'+ck(prevIV,'Đã PV')+'</span> Đã PV</div>';var availTime=c.availTime||'';html+='<div class="se-field">• Thời gian đi làm: &nbsp;<span class="se-check">'+ck(availTime,'Đi làm ngay')+'</span> Đi làm ngay &nbsp;<span class="se-check">'+ck(availTime,'Chọn ngày')+'</span> Đi làm từ ngày: <span class="se-val">'+(c.availDate?fd(c.availDate):'')+'</span></div>';var smoke=c.smoke||'';html+='<div class="se-field">• Hút thuốc? &nbsp;<span class="se-check">'+ck(smoke,'Có')+'</span> Có &nbsp;<span class="se-check">'+ck(smoke,'Không')+'</span> Không</div>';html+='<div class="se-field">• Nguồn TD: &nbsp;'+srcChecks+'</div>';var bus=c.bus||'Không';html+='<div class="se-field">• Xe bus? &nbsp;<span class="se-check">'+ck(bus,'Không')+'</span> Không &nbsp;<span class="se-check">'+ck(bus,'Có')+'</span> Có</div></div>';html+='<div class="se-footer"><div><strong>Người tuyển dụng</strong><br><br>Kết quả: □ OK &nbsp;□ NG</div><div><strong>Ký và ghi rõ họ tên</strong><br><br><br>'+c.name+'</div></div></div>';return html}
 
 var techFields=['ia_knowledge','ia_experience','ia_problem','ia_logic','ia_tools'];var softFields=['ia_communication','ia_teamwork','ia_attitude','ia_learning','ia_culture'];
 function calcEvalScores(){var tech=0,tc=0;techFields.forEach(function(f){var v=parseInt(document.getElementById(f).value);if(v){tech+=v;tc++}});var soft=0,sc=0;softFields.forEach(function(f){var v=parseInt(document.getElementById(f).value);if(v){soft+=v;sc++}});document.getElementById('iaTechScore').textContent=tc?tech+' / 25':'- / 25';document.getElementById('iaSoftScore').textContent=sc?soft+' / 25':'- / 25';var total=tech+soft;document.getElementById('iaTotalScore').textContent=(tc+sc)?total+' / 50':'- / 50';return(tc===5&&sc===5)?total:null}
