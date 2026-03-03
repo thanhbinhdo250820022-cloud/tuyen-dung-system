@@ -228,7 +228,7 @@ tbody tr:hover{background:#dce8f5}
 <div class="form-group"><label>Phòng ban <span class="required-star">*</span></label>
 <select id="login_empDept" required><option value="">-- Chọn --</option><option>Sản xuất 1</option><option>Sản xuất 2.1</option><option>Sản xuất 2.2</option><option>Sản xuất 2.2 M&amp;E</option><option>Sản xuất 3.345</option><option>Sản xuất 3.6</option><option>Sản xuất 4</option><option>Bảo trì bảo dưỡng 1</option><option>Kỹ thuật 1</option><option>Bảo trì bảo dưỡng 2</option><option>Kỹ thuật 2</option><option>Kiểm soát chất lượng 1</option><option>Kiểm soát chất lượng 2</option><option>QA</option><option>Kiểm tra 1</option><option>Kiểm tra 2</option><option>Phân tích</option><option>EHS</option><option>Hỗ trợ sản xuất</option><option>Kế toán</option><option>Hành chính nhân sự</option><option>IT (hệ thống)</option></select></div>
 <div class="form-group"><label>Chức vụ <span class="required-star">*</span></label>
-<select id="login_empTitle" required><option value="">-- Chọn --</option><option value="Công nhân">Công nhân</option><option value="Nhân viên">Nhân viên</option><option value="Kỹ sư">Kỹ sư</option><option value="Trưởng nhóm">Trưởng nhóm</option><option value="Quản lý">Quản lý</option><option value="Giám đốc">Giám đốc</option></select></div>
+<select id="login_empTitle" required><option value="">-- Chọn --</option><option value="Công nhân">Công nhân</option><option value="Trợ lý">Trợ lý</option><option value="Nhân viên">Nhân viên</option><option value="Kỹ sư">Kỹ sư</option><option value="Trưởng nhóm">Trưởng nhóm</option><option value="Trưởng bộ phận">Trưởng bộ phận</option>><option value="Trưởng phòng">Trưởng phòng</option></select></div>
 <div class="login-error" id="loginError">Vui lòng điền đầy đủ. Họ tên phải IN HOA.</div>
 <button type="submit" class="login-btn">Đăng nhập</button>
 </form>
@@ -488,7 +488,7 @@ tbody tr:hover{background:#dce8f5}
 </div>
 <div class="form-row">
 <div class="form-group"><label>Vị trí <span class="required-star">*</span></label><input type="text" id="rf_position" required></div>
-<div class="form-group"><label>Cấp bậc <span class="required-star">*</span></label><select id="rf_level" required><option value="">--</option><option>Công nhân</option><option>Nhân viên</option><option>Kỹ sư</option><option>Trưởng nhóm</option><option>Quản lý</option><option>Giám đốc</option></select></div>
+<div class="form-group"><label>Cấp bậc <span class="required-star">*</span></label><select id="rf_level" required><option value="">--</option><option value="Công nhân">Công nhân</option><option value="Trợ lý">Trợ lý</option><option value="Nhân viên">Nhân viên</option><option value="Kỹ sư">Kỹ sư</option><option value="Trưởng nhóm">Trưởng nhóm</option><option value="Trưởng bộ phận">Trưởng bộ phận</option>><option value="Trưởng phòng">Trưởng phòng</option></select></div>
 <div class="form-group"><label>Số lượng <span class="required-star">*</span></label><input type="number" id="rf_qty" min="1" required value="1"></div>
 </div>
 <div class="form-group"><label>Loại hình <span class="required-star">*</span></label>
