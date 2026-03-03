@@ -1171,7 +1171,3 @@ const server = http.createServer((req, res) => {
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`Server đang chạy tại port ${PORT}`);
 });
-  console.log(`Server đang chạy tại port ${PORT}`);
-});
-  console.log(`Server đang chạy tại port ${PORT}`);
-});
